@@ -1,8 +1,16 @@
 {
+	"循演_启动": {
+		"recognition": "DirectHit",
+		"action": "donothing",
+		"next": [
+			"循演_开始作战",
+			"循演ex"
+		]
+	},
 	"循演ex": {
 		"recognition": "OCR",
 		"roi": [515, 135, 179, 55],
-		"expected": "循演",
+		"expected": ["循演", "循", "演"],
 		"action": "LongPress",
 		"duration": 15,
 		"target": [1079, 174, 21, 22],
@@ -178,15 +186,33 @@
 	},
 	"循演_再次作战": {
 		"recognition": "OCR",
-		"roi": [371, 608, 91, 36],
+		"roi": [333, 608, 134, 32],
 		"expected": ["再次作战"],
+		"action": "LongPress",
+		"target": [333, 608, 134, 32],
+		"duration": 15,
+		"post_delay": 1000,
 		"next": [
-			"循演ex",
-			"循演_开始作战1"
+			"循演_开始作战",
+			"循演_再次作战0"
+		]
+	},
+	"循演_再次作战0": {
+		"recognition": "OCR",
+		"roi": [333, 608, 134, 32],
+		"expected": ["再次作战"],
+		"inverse": true,
+		"action": "LongPress",
+		"target": [333, 608, 134, 32],
+		"duration": 15,
+		"post_delay": 1000,
+		"next": [
+			"循演_开始作战",
+			"循演_再次作战",
+			"循演_再次作战0"
 		],
 		"interrupt": [
-			"public二星人形回收_人形回收",
-			"public_关卡结算点击1"
+			"public二星人形回收_人形回收"
 		]
 	}
 }

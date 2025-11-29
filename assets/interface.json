@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "name": "MaaGF1",
-    "version": "v1.6",
+    "version": "v1.7.13",
     "url": "https://github.com/LeonNagant/MaaGF1_Test",
     "mirrorchyan_rid": null,
     "mirrorchyan_multiplatform": false,
@@ -275,11 +275,13 @@
         },
         {
             "name": "循演EX打捞",
-            "entry": "循演_开始作战",
-            "doc": "选择打捞关卡和路线，固定`第一队为打捞队`，将地图缩放最小、`所有点位不要被遮挡`即可，在对应路线横向右边机场上部署后再运行脚本",
+            "entry": "循演_启动",
+            "doc": "选择打捞关卡和路线，固定`第一队为打捞队`，将地图缩放最小、`所有点位不要被遮挡`即可，在对应路线横向右边机场上部署后再运行脚本,手动校准：缩到最小按住从右往左拉，然后上下调整使得左上角蓝毛铁血脑袋顶到X",
             "option": [
                 "循演EX选择打捞关卡",
-                "循演EX选择打捞路线{横排从上往下}"
+                "循演EX选择打捞路线{横排从上往下}",
+                "循演EX是否启用结算加速",
+                "循演EX是否手动校准"
             ],
             "repeatable": true,
             "repeat_count": 9999
@@ -1222,6 +1224,52 @@
                             "expected": "6"
                         }
                     }
+                }
+            ]
+        },
+        "循演EX是否启用结算加速": {
+            "cases": [
+                {
+                    "name": "启用结算加速",
+                    "pipeline_override": {
+                        "循演_执行计划": {
+                            "interrupt": [
+                                "public_不中断计划",
+                                "public_加速结算进入"
+                            ]
+                        },
+                        "public_加速后等待": {
+                            "post_delay": 9000
+                        }
+                    }
+                },
+                {
+                    "name": "关闭结算加速",
+                    "pipeline_override": {
+                        "循演_执行计划": {
+                            "post_delay": 8000,
+		                    "timeout": 150000,
+		                    "rate_limit": 2000,
+		                    "interrupt": [
+		                    ]
+                        }
+                    }
+                }
+            ]
+        },
+        "循演EX是否手动校准": {
+            "cases": [
+                {
+                    "name": "手动校准",
+                    "pipeline_override": {
+                        "循演_部署": {
+		                    "target": [852, 223, 20, 21],
+		                    "target_offset": [0, 0, 0, 0]
+                        }
+                    }
+                },
+                {
+                    "name": "自动校准"
                 }
             ]
         },
